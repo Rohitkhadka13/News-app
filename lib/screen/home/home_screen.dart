@@ -13,11 +13,16 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+enum FilterSource { bbcNews, espn, bbcSport, cnn, reuters, alJazeera }
+
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
 
   final format = DateFormat("dd-MM-yyyy");
 
+  FilterSource? selectedFilter;
+
+  String name = "bbc-news";
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
@@ -38,6 +43,53 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<FilterSource>(
+              initialValue: selectedFilter,
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.black,
+              ),
+              onSelected: (FilterSource item) {
+                setState(() {
+                  selectedFilter = item;
+
+                  if (item == FilterSource.bbcNews) {
+                    name = "bbc-news";
+                  } else if (item == FilterSource.reuters) {
+                    name = "reuters";
+                  } else if (item == FilterSource.espn) {
+                    name = "espn";
+                  } else if (item == FilterSource.cnn) {
+                    name = "cnn";
+                  } else if (item == FilterSource.alJazeera) {
+                    name = "al-jazeera-english";
+                  }
+                });
+              },
+              itemBuilder: (context) => <PopupMenuEntry<FilterSource>>[
+                    const PopupMenuItem<FilterSource>(
+                      value: FilterSource.bbcNews,
+                      child: Text("BBC News"),
+                    ),
+                    const PopupMenuItem<FilterSource>(
+                      value: FilterSource.reuters,
+                      child: Text("Reuters"),
+                    ),
+                    const PopupMenuItem<FilterSource>(
+                      value: FilterSource.espn,
+                      child: Text("ESPN"),
+                    ),
+                    const PopupMenuItem<FilterSource>(
+                      value: FilterSource.cnn,
+                      child: Text("CNN"),
+                    ),
+                    const PopupMenuItem<FilterSource>(
+                      value: FilterSource.alJazeera,
+                      child: Text("Al-Jazeera"),
+                    ),
+                  ])
+        ],
       ),
       body: ListView(
         children: [
@@ -45,10 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: height * 0.55,
             width: width,
             child: FutureBuilder<NewsHeadlinesModel>(
-                future: newsViewModel.fetchNewsHeadlines(),
+                future: newsViewModel.fetchNewsHeadlines(name),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: SpinKitDancingSquare(
                         color: Colors.blue,
                         size: 40,
@@ -85,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: spinKit,
                                         ),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            const Icon(Icons.error),
                                       ),
                                     ),
                                   ),
@@ -98,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Container(
-                                      padding: EdgeInsets.all(15),
+                                      padding: const EdgeInsets.all(15),
                                       alignment: Alignment.bottomCenter,
                                       height: height * 0.22,
                                       child: Column(
@@ -121,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Container(
                                             width: width * 0.7,
                                             child: Row(
