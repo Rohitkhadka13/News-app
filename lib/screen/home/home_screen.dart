@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_app/extension.dart';
 import 'package:news_app/models/categories_news_model.dart';
 import 'package:news_app/models/news_headline_model.dart';
 import 'package:news_app/screen/category/category_screen.dart';
@@ -28,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String name = "bbc-news";
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
-    final width = MediaQuery.of(context).size.width * 1;
+    final height = context.screenHeight;
+    final width = context.screenWidth;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -333,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Expanded(
                                       child: Container(
                                     height: height * 0.18,
-                                    padding: EdgeInsets.only(left: 15),
+                                    padding: const EdgeInsets.only(left: 15),
                                     child: Column(
                                       children: [
                                         Text(
@@ -346,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

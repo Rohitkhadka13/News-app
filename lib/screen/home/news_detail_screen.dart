@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:news_app/extension.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   final String newsImage;
@@ -32,8 +33,8 @@ final format = DateFormat("dd-MM-yyyy");
 class _NewsDetailScreenState extends State<NewsDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
-    final width = MediaQuery.of(context).size.width * 1;
+    final height = context.screenHeight;
+    final width = context.screenWidth;
     DateTime dateTime = DateTime.parse(widget.newsDate);
     String fullContent =
         widget.newsContent.replaceAll(RegExp(r"\[\+\d+ chars\]"), '');
@@ -48,7 +49,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
           Container(
             height: height * 0.45,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),
@@ -56,15 +57,15 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                 imageUrl: widget.newsImage,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
+                    const Center(child: CircularProgressIndicator()),
               ),
             ),
           ),
           Container(
             height: height * .6,
             margin: EdgeInsets.only(top: height * 0.4),
-            padding: EdgeInsets.only(top: 20, right: 20, left: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30),

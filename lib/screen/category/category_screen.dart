@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:news_app/extension.dart';
 import 'package:news_app/models/categories_news_model.dart';
 import 'package:news_app/screen/home/news_detail_screen.dart';
 import 'package:news_app/view_model/news_view_model.dart';
@@ -33,8 +34,8 @@ List<String> categoriesList = [
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
-    final width = MediaQuery.of(context).size.width * 1;
+    final height = context.screenHeight;
+    final width = context.screenWidth;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
